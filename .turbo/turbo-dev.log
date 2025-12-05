@@ -1,0 +1,11 @@
+
+> maxstack-web-template@0.1.0 dev /Users/da/prj/max/apps/web
+> MOCKS=true react-router dev
+
+[2m3:37:36 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m Re-optimizing dependencies because vite config has changed
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://localhost:[1m5173[22m/[39m
+[2m  [32m➜[39m  [1mNetwork[22m[2m: use [22m[1m--host[22m[2m to expose[22m
+[2m[32m  ➜[39m[22m[2m  press [22m[1mh + enter[22m[2m to show help[22m
+[2m3:37:39 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32m✨ new dependencies optimized: [33mbetter-auth/react, better-auth/client/plugins, @radix-ui/react-accordion, lucide-react, @radix-ui/react-avatar, @radix-ui/react-slot, class-variance-authority, @radix-ui/react-checkbox, @radix-ui/react-collapsible, cmdk, @radix-ui/react-dialog, @radix-ui/react-label, @radix-ui/react-popover, @radix-ui/react-progress, @radix-ui/react-radio-group, @radix-ui/react-select, @radix-ui/react-separator, @radix-ui/react-switch, @radix-ui/react-tabs, @radix-ui/react-toggle-group, @radix-ui/react-toggle, @radix-ui/react-tooltip, clsx, tailwind-merge, zod, @react-router/dev/routes[32m[39m
+[2m3:37:39 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32m✨ optimized dependencies changed. reloading[39m
+[41m[30m ELIFECYCLE [39m[49m [31mCommand failed with exit code 130.[39m

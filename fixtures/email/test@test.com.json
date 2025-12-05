@@ -1,0 +1,7 @@
+{
+	"to": "test@test.com",
+	"from": "mail.maxstack.dev",
+	"subject": "Verify your email address",
+	"text": "Click the link to verify your email: http://localhost:5173/api/auth/verify-email?token=eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJpYXQiOjE3NTg5ODE1MjAsImV4cCI6MTc1ODk4NTEyMH0.RmziPRYgnA1wK-fmWhZabbuBlLUSVIx04uzbqkKHiDU&callbackURL=/",
+	"html": "<p>Click the link to verify your email: <a href=\"http://localhost:5173/api/auth/verify-email?token=eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJpYXQiOjE3NTg5ODE1MjAsImV4cCI6MTc1ODk4NTEyMH0.RmziPRYgnA1wK-fmWhZabbuBlLUSVIx04uzbqkKHiDU&callbackURL=/\">http://localhost:5173/api/auth/verify-email?token=eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJpYXQiOjE3NTg5ODE1MjAsImV4cCI6MTc1ODk4NTEyMH0.RmziPRYgnA1wK-fmWhZabbuBlLUSVIx04uzbqkKHiDU&callbackURL=/</a></p>"
+}
