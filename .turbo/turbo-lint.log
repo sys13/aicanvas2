@@ -1,6 +1,0 @@
-
-
-> maxstack-web-template@0.1.0 lint /Users/da/prj/max/apps/web
-> biome check --write
-
-[0m[34mChecked [0m[0m[34m71[0m[0m[34m [0m[0m[34mfiles[0m[0m[34m in [0m[0m[34m12[0m[0m[2m[34mms[0m[0m[34m.[0m[0m[34m No fixes applied.[0m
