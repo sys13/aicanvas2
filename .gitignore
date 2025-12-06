@@ -19,3 +19,6 @@ node_modules/
 /playwright/.cache/
 
 .codex
+.codex/sessions
+.codex/log
+.codex/auth.json
