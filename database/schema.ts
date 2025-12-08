@@ -162,3 +162,53 @@ export const passkey = sqliteTable('passkey', {
 
 export type Passkey = typeof passkey.$inferSelect
 export type NewPasskey = typeof passkey.$inferInsert
+
+// Deliverable tables for Core Deliverable Engine MVP
+export const deliverable = sqliteTable('deliverable', {
+	id,
+	userId: text()
+		.notNull()
+		.references(() => user.id, { onDelete: 'cascade' }),
+	name: text().notNull(),
+	description: text().notNull(),
+	status: text()
+		.$type<'draft' | 'in_progress' | 'completed' | 'failed'>()
+		.notNull()
+		.default('draft'),
+	...timestamps,
+})
+
+export type Deliverable = typeof deliverable.$inferSelect
+export type NewDeliverable = typeof deliverable.$inferInsert
+
+export const workflowStep = sqliteTable('workflow_step', {
+	id,
+	deliverableId: text()
+		.notNull()
+		.references(() => deliverable.id, { onDelete: 'cascade' }),
+	stepType: text()
+		.$type<'ask' | 'gather' | 'reason' | 'produce' | 'revise'>()
+		.notNull(),
+	status: text()
+		.$type<'pending' | 'in_progress' | 'completed' | 'failed'>()
+		.notNull()
+		.default('pending'),
+	input: text(), // JSON string for step input data
+	output: text(), // JSON string for step output data
+	progressPercentage: integer().notNull().default(0),
+	...timestamps,
+})
+
+export type WorkflowStep = typeof workflowStep.$inferSelect
+export type NewWorkflowStep = typeof workflowStep.$inferInsert
+
+export const template = sqliteTable('template', {
+	id,
+	name: text().notNull(),
+	content: text().notNull(),
+	category: text().notNull(),
+	...timestamps,
+})
+
+export type Template = typeof template.$inferSelect
+export type NewTemplate = typeof template.$inferInsert

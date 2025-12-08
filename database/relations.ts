@@ -19,6 +19,10 @@ export const relations = defineRelations(schema, (r) => ({
 			from: r.user.id,
 			to: r.invitation.inviterId,
 		}),
+		deliverable: r.many.deliverable({
+			from: r.user.id,
+			to: r.deliverable.userId,
+		}),
 	},
 	session: {
 		user: r.one.user({
@@ -60,6 +64,22 @@ export const relations = defineRelations(schema, (r) => ({
 		inviter: r.one.user({
 			from: r.invitation.inviterId,
 			to: r.user.id,
+		}),
+	},
+	deliverable: {
+		user: r.one.user({
+			from: r.deliverable.userId,
+			to: r.user.id,
+		}),
+		workflowSteps: r.many.workflowStep({
+			from: r.deliverable.id,
+			to: r.workflowStep.deliverableId,
+		}),
+	},
+	workflowStep: {
+		deliverable: r.one.deliverable({
+			from: r.workflowStep.deliverableId,
+			to: r.deliverable.id,
 		}),
 	},
 }))
