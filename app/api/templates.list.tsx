@@ -1,13 +1,12 @@
 import type { LoaderFunctionArgs } from 'react-router'
-import { json } from 'react-router'
 import { getAllTemplates, getTemplatesByCategory } from '~/services/template.server'
-import { getSession } from '~/lib/auth.server'
+import { auth } from '~/lib/auth.server'
 
 export async function loader({ request }: LoaderFunctionArgs) {
-	const session = await getSession(request)
+	const session = await auth.api.getSession({ headers: request.headers })
 
 	if (!session?.user?.id) {
-		return json({ error: 'Unauthorized' }, { status: 401 })
+		return Response.json({ error: 'Unauthorized' }, { status: 401 })
 	}
 
 	try {
@@ -18,12 +17,12 @@ export async function loader({ request }: LoaderFunctionArgs) {
 			? await getTemplatesByCategory(category)
 			: await getAllTemplates()
 
-		return json({
+		return Response.json({
 			success: true,
 			templates,
 		})
 	} catch (error) {
 		console.error('Error fetching templates:', error)
-		return json({ error: 'Failed to fetch templates' }, { status: 500 })
+		return Response.json({ error: 'Failed to fetch templates' }, { status: 500 })
 	}
 }

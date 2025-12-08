@@ -16,7 +16,7 @@ export async function getWorkflowStepsByDeliverableId(
 	deliverableId: string,
 ): Promise<WorkflowStep[]> {
 	return await db.query.workflowStep.findMany({
-		where: eq(workflowStep.deliverableId, deliverableId),
+		where: { deliverableId },
 		orderBy: (workflowStep, { asc }) => [asc(workflowStep.createdAt)],
 	})
 }
@@ -63,7 +63,7 @@ export async function executeWorkflowStep(
 	previousOutput?: string,
 ): Promise<string> {
 	const step = await db.query.workflowStep.findFirst({
-		where: eq(workflowStep.id, stepId),
+		where: { id: stepId },
 	})
 
 	if (!step) {
@@ -137,7 +137,7 @@ Your task is to review and revise the produced deliverable. Identify improvement
 export async function executeFullWorkflow(deliverableId: string): Promise<void> {
 	// Get the deliverable
 	const deliverableData = await db.query.deliverable.findFirst({
-		where: eq(workflowStep.deliverableId, deliverableId),
+		where: { id: deliverableId },
 	})
 
 	if (!deliverableData) {

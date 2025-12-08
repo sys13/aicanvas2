@@ -1,14 +1,13 @@
 import type { ActionFunctionArgs } from 'react-router'
-import { json } from 'react-router'
 import { createDeliverable } from '~/services/deliverable.server'
 import { initializeWorkflow } from '~/services/workflow.server'
-import { getSession } from '~/lib/auth.server'
+import { auth } from '~/lib/auth.server'
 
 export async function action({ request }: ActionFunctionArgs) {
-	const session = await getSession(request)
+	const session = await auth.api.getSession({ headers: request.headers })
 
 	if (!session?.user?.id) {
-		return json({ error: 'Unauthorized' }, { status: 401 })
+		return Response.json({ error: 'Unauthorized' }, { status: 401 })
 	}
 
 	try {
@@ -17,7 +16,10 @@ export async function action({ request }: ActionFunctionArgs) {
 		const description = formData.get('description') as string
 
 		if (!name || !description) {
-			return json({ error: 'Name and description are required' }, { status: 400 })
+			return Response.json(
+				{ error: 'Name and description are required' },
+				{ status: 400 },
+			)
 		}
 
 		// Create the deliverable
@@ -31,13 +33,16 @@ export async function action({ request }: ActionFunctionArgs) {
 		// Initialize workflow steps
 		const workflowSteps = await initializeWorkflow(deliverable.id)
 
-		return json({
+		return Response.json({
 			success: true,
 			deliverable,
 			workflowSteps,
 		})
 	} catch (error) {
 		console.error('Error creating deliverable:', error)
-		return json({ error: 'Failed to create deliverable' }, { status: 500 })
+		return Response.json(
+			{ error: 'Failed to create deliverable' },
+			{ status: 500 },
+		)
 	}
 }

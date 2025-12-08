@@ -1,6 +1,6 @@
 import { eq } from 'drizzle-orm'
 import { db } from '~/utils/db.server'
-import { deliverable, workflowStep } from '../../database/schema'
+import { deliverable } from '../../database/schema'
 import type { Deliverable, NewDeliverable } from '../../database/schema'
 
 export async function createDeliverable(data: NewDeliverable): Promise<Deliverable> {
@@ -10,13 +10,13 @@ export async function createDeliverable(data: NewDeliverable): Promise<Deliverab
 
 export async function getDeliverableById(id: string): Promise<Deliverable | undefined> {
 	return await db.query.deliverable.findFirst({
-		where: eq(deliverable.id, id),
+		where: { id },
 	})
 }
 
 export async function getDeliverableWithSteps(id: string) {
 	return await db.query.deliverable.findFirst({
-		where: eq(deliverable.id, id),
+		where: { id },
 		with: {
 			workflowSteps: true,
 		},
@@ -25,7 +25,7 @@ export async function getDeliverableWithSteps(id: string) {
 
 export async function getDeliverablesByUserId(userId: string): Promise<Deliverable[]> {
 	return await db.query.deliverable.findMany({
-		where: eq(deliverable.userId, userId),
+		where: { userId },
 		orderBy: (deliverable, { desc }) => [desc(deliverable.createdAt)],
 	})
 }

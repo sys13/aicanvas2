@@ -1,13 +1,12 @@
 import type { ActionFunctionArgs } from 'react-router'
-import { json } from 'react-router'
 import { createTemplate } from '~/services/template.server'
-import { getSession } from '~/lib/auth.server'
+import { auth } from '~/lib/auth.server'
 
 export async function action({ request }: ActionFunctionArgs) {
-	const session = await getSession(request)
+	const session = await auth.api.getSession({ headers: request.headers })
 
 	if (!session?.user?.id) {
-		return json({ error: 'Unauthorized' }, { status: 401 })
+		return Response.json({ error: 'Unauthorized' }, { status: 401 })
 	}
 
 	try {
@@ -17,7 +16,7 @@ export async function action({ request }: ActionFunctionArgs) {
 		const category = formData.get('category') as string
 
 		if (!name || !content || !category) {
-			return json(
+			return Response.json(
 				{ error: 'Name, content, and category are required' },
 				{ status: 400 },
 			)
@@ -29,12 +28,12 @@ export async function action({ request }: ActionFunctionArgs) {
 			category,
 		})
 
-		return json({
+		return Response.json({
 			success: true,
 			template,
 		})
 	} catch (error) {
 		console.error('Error creating template:', error)
-		return json({ error: 'Failed to create template' }, { status: 500 })
+		return Response.json({ error: 'Failed to create template' }, { status: 500 })
 	}
 }
