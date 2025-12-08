@@ -74,14 +74,16 @@ export default function DeliverableDetail() {
 				<h2 className="text-xl font-semibold mb-4">Workflow Progress</h2>
 
 				<div className="space-y-6">
-					{deliverable.workflowSteps?.map((step: WorkflowStep, index: number) => (
-						<WorkflowStepCard
-							key={step.id}
-							step={step}
-							stepNumber={index + 1}
-							totalSteps={deliverable.workflowSteps?.length || 0}
-						/>
-					))}
+					{deliverable.workflowSteps?.map(
+						(step: WorkflowStep, index: number) => (
+							<WorkflowStepCard
+								key={step.id}
+								step={step}
+								stepNumber={index + 1}
+								totalSteps={deliverable.workflowSteps?.length || 0}
+							/>
+						),
+					)}
 				</div>
 			</div>
 		</div>
@@ -113,9 +115,7 @@ function WorkflowStepCard({
 	}
 
 	return (
-		<div
-			className={`border-2 rounded-lg p-4 ${statusColors[step.status]}`}
-		>
+		<div className={`border-2 rounded-lg p-4 ${statusColors[step.status]}`}>
 			<div className="flex items-center justify-between mb-2">
 				<div className="flex items-center gap-2">
 					<span className="text-2xl">{stepIcons[step.stepType]}</span>
@@ -142,9 +142,7 @@ function WorkflowStepCard({
 							style={{ width: `${step.progressPercentage}%` }}
 						/>
 					</div>
-					<p className="text-xs text-right mt-1">
-						{step.progressPercentage}%
-					</p>
+					<p className="text-xs text-right mt-1">{step.progressPercentage}%</p>
 				</div>
 			)}
 

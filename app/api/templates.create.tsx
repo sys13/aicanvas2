@@ -34,6 +34,9 @@ export async function action({ request }: ActionFunctionArgs) {
 		})
 	} catch (error) {
 		console.error('Error creating template:', error)
-		return Response.json({ error: 'Failed to create template' }, { status: 500 })
+		return Response.json(
+			{ error: 'Failed to create template' },
+			{ status: 500 },
+		)
 	}
 }

@@ -7,7 +7,9 @@ import { generateWithOpenAI } from './openai.server'
 
 type StepType = 'ask' | 'gather' | 'reason' | 'produce' | 'revise'
 
-export async function createWorkflowStep(data: NewWorkflowStep): Promise<WorkflowStep> {
+export async function createWorkflowStep(
+	data: NewWorkflowStep,
+): Promise<WorkflowStep> {
 	const [newStep] = await db.insert(workflowStep).values(data).returning()
 	return newStep
 }
@@ -40,7 +42,9 @@ export async function updateWorkflowStepProgress(
 	return updated
 }
 
-export async function initializeWorkflow(deliverableId: string): Promise<WorkflowStep[]> {
+export async function initializeWorkflow(
+	deliverableId: string,
+): Promise<WorkflowStep[]> {
 	const steps: StepType[] = ['ask', 'gather', 'reason', 'produce', 'revise']
 	const createdSteps: WorkflowStep[] = []
 
@@ -75,7 +79,11 @@ export async function executeWorkflowStep(
 
 	try {
 		// Generate prompt based on step type
-		const prompt = generateStepPrompt(step.stepType, deliverable, previousOutput)
+		const prompt = generateStepPrompt(
+			step.stepType,
+			deliverable,
+			previousOutput,
+		)
 
 		// Call OpenAI to execute the step
 		const output = await generateWithOpenAI(prompt)
@@ -96,7 +104,9 @@ function generateStepPrompt(
 	deliverable: { name: string; description: string },
 	previousOutput?: string,
 ): string {
-	const context = previousOutput ? `\n\nPrevious step output:\n${previousOutput}` : ''
+	const context = previousOutput
+		? `\n\nPrevious step output:\n${previousOutput}`
+		: ''
 
 	switch (stepType) {
 		case 'ask':
@@ -134,7 +144,9 @@ Your task is to review and revise the produced deliverable. Identify improvement
 	}
 }
 
-export async function executeFullWorkflow(deliverableId: string): Promise<void> {
+export async function executeFullWorkflow(
+	deliverableId: string,
+): Promise<void> {
 	// Get the deliverable
 	const deliverableData = await db.query.deliverable.findFirst({
 		where: { id: deliverableId },

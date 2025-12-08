@@ -8,7 +8,9 @@ export async function createTemplate(data: NewTemplate): Promise<Template> {
 	return newTemplate
 }
 
-export async function getTemplateById(id: string): Promise<Template | undefined> {
+export async function getTemplateById(
+	id: string,
+): Promise<Template | undefined> {
 	return await db.query.template.findFirst({
 		where: { id },
 	})
@@ -20,7 +22,9 @@ export async function getAllTemplates(): Promise<Template[]> {
 	})
 }
 
-export async function getTemplatesByCategory(category: string): Promise<Template[]> {
+export async function getTemplatesByCategory(
+	category: string,
+): Promise<Template[]> {
 	return await db.query.template.findMany({
 		where: { category },
 		orderBy: (template, { desc }) => [desc(template.createdAt)],

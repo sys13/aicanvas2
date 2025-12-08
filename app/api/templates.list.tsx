@@ -1,5 +1,8 @@
 import type { LoaderFunctionArgs } from 'react-router'
-import { getAllTemplates, getTemplatesByCategory } from '~/services/template.server'
+import {
+	getAllTemplates,
+	getTemplatesByCategory,
+} from '~/services/template.server'
 import { auth } from '~/lib/auth.server'
 
 export async function loader({ request }: LoaderFunctionArgs) {
@@ -23,6 +26,9 @@ export async function loader({ request }: LoaderFunctionArgs) {
 		})
 	} catch (error) {
 		console.error('Error fetching templates:', error)
-		return Response.json({ error: 'Failed to fetch templates' }, { status: 500 })
+		return Response.json(
+			{ error: 'Failed to fetch templates' },
+			{ status: 500 },
+		)
 	}
 }
