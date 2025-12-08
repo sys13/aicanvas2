@@ -1,10 +1,14 @@
 import { openai } from '@ai-sdk/openai'
 import { generateText } from 'ai'
 
-export async function generateWithOpenAI(prompt: string): Promise<string> {
-	const apiKey = process.env.OPENAI_API_KEY
+// Validate API key at module load time
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY
+if (!OPENAI_API_KEY) {
+	console.warn('Warning: OPENAI_API_KEY is not configured')
+}
 
-	if (!apiKey) {
+export async function generateWithOpenAI(prompt: string): Promise<string> {
+	if (!OPENAI_API_KEY) {
 		throw new Error('OPENAI_API_KEY is not configured')
 	}
 

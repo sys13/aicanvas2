@@ -46,17 +46,16 @@ export async function initializeWorkflow(
 	deliverableId: string,
 ): Promise<WorkflowStep[]> {
 	const steps: StepType[] = ['ask', 'gather', 'reason', 'produce', 'revise']
-	const createdSteps: WorkflowStep[] = []
 
-	for (const stepType of steps) {
-		const step = await createWorkflowStep({
-			deliverableId,
-			stepType,
-			status: 'pending',
-			progressPercentage: 0,
-		})
-		createdSteps.push(step)
-	}
+	// Batch insert all workflow steps at once
+	const stepsToCreate = steps.map((stepType) => ({
+		deliverableId,
+		stepType,
+		status: 'pending' as const,
+		progressPercentage: 0,
+	}))
+
+	const createdSteps = await db.insert(workflowStep).values(stepsToCreate).returning()
 
 	return createdSteps
 }
